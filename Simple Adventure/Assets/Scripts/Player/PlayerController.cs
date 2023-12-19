@@ -27,4 +27,8 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate() {
         rig.velocity = new Vector2(direction.x * speed, rig.velocity.y);
     }
+
+    void onAnimations() {
+        
+    }
 }
