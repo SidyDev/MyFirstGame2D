@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 direction;
 
     private bool isGround;
+    private bool isJumping;
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
@@ -49,10 +50,14 @@ public class PlayerController : MonoBehaviour
     }
 
     void onJump() {
-        if(isGround) {
-            if(Input.GetButtonDown("Jump")) {
+        if(Input.GetButtonDown("Jump")) {
+            if(isGround) {
                 rig.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 isGround = false;
+                isJumping = true;
+            } else if(isJumping) {
+                rig.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                isJumping = false;
             }
         }
     }
@@ -60,6 +65,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) {
         if(collision.gameObject.layer == 3) {
             isGround = true;
+            isJumping = false;
         }
     }
 }
